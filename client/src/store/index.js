@@ -12,7 +12,7 @@ import forms from './forms'
 import organizationRequests, { createOrganizationRequest } from './organizationRequests';
 import userRequests, { deleteUserRequest } from './userRequests';
 
-const middleware = applyMiddleware(thunk, logger);
+const middleware = applyMiddleware(thunk);//, logger);
 const reducers = combineReducers({ organizations, users, descriptions, user, userOrganizations, forms, organizationRequests, userRequests });
 
 const store = createStore(reducers, middleware);
