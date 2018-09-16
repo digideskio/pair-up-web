@@ -30,7 +30,7 @@ export const createNewOrg = (organization, userId, history) => {
 }
 
 socket.on('newOrganizationRequest', organizationRequest => {
-  console.log(organizationRequest)
+  // console.log(organizationRequest)
   store.dispatch(createOrganizationRequest(organizationRequest));
 });
 
