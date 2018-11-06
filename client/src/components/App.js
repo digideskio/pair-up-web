@@ -23,6 +23,8 @@ import OrganizationForm from './Organization/OrganizationForm';
 import Welcome from './General/Welcome';
 import Home from './Home';
 
+import OrgNav from './Organization/OrgNav';
+
 class App extends React.Component {
   componentDidMount() {
     const { loadOrganizations, loadUsers, loadDescriptions, loadUserOrganizations, loadUser, loadForm, loadOrganizationRequests, loadUserRequests } = this.props;
@@ -58,15 +60,23 @@ class App extends React.Component {
                 {/* USER ROUTES */}
                 <Route exact path='/users' component={UsersMaster} />
                 <Route exact path='/users/:id' component={({ match }) => <UserInfoAuth id={match.params.id} />} />
+                
+                
                 {/* ORGANIZATION ROUTES */}
+                
                 <Route exact path='/organizations' component={OrganizationsMaster} />
                 <Route exact path='/organizations/create' component={OrgFormAuth} />
+                
                 {/* <Route path='/organizations/:id' component={OrgNav} /> */}
                 <Route exact path='/organizations/:id' component={({ match, history }) => <OrganizationInfoAuth id={match.params.id} history={history} />} />
+
+          
+
                 <Route exact path='/organizations/:id/users' component={({ match, history }) => <OrgUsersAuth id={match.params.id} history={history} />} />
                 <Route exact path='/organizations/:id/requests' component={({ match, history }) => <OrgRequestsAuth id={match.params.id} history={history} />} />
                 <Route exact path='/organizations/:id/customize' component={({ match, history }) => <OrgCustomizeAuth id={match.params.id} history={history} />} />
                 <Route exact path='/organizations/:id/account' component={({ match, history }) => <OrganizationInfoAuth id={match.params.id} history={history} />} />
+
                 {/* MASTER ROUTES */}
                 <Route exact path='/master' component={OrganizationsMaster} />
                 <Route exact path='/master/organizationRequests' component={AllOrganizationRequests} />

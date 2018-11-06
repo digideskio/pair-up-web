@@ -2,9 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { deleteFormFromServer } from '../../store';
 import AddForm from './AddForm';
-import { Link } from 'react-router-dom';
 import ColorPicker from './ColorPicker';
 import TextColor from './TextColor';
+
+import OrgNav from './OrgNav';
 
 const OrgCustomize = ({ organization, id, ownForms, forms, deleteForm }) => {
   if (!organization) return null
@@ -14,15 +15,7 @@ const OrgCustomize = ({ organization, id, ownForms, forms, deleteForm }) => {
       <div className="container">
         <div className="row">
 
-          <div className="col-lg-3">
-            <h3 className="my-4"></h3>
-            <div className="list-group">
-              <Link to={`/organizations/${orgId}/users`} className="list-group-item">Manage Members</Link>
-              <Link to={`/organizations/${orgId}/requests`} href="#" className="list-group-item">Manage Requests</Link>
-              <Link to={`/organizations/${orgId}/customize`} href="#" className="list-group-item active">Customize My Page</Link>
-              <Link to={`/organizations/${orgId}/account`} href="#" className="list-group-item">Account Details</Link>
-            </div>
-          </div>
+          <OrgNav id={id} />
 
           <div className="col-lg-9" >
             <div className="card mt-4 card-body">

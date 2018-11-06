@@ -28,31 +28,38 @@ class OrganizationRequests extends Component {
     const { accept, decline } = this;
     const { requestStatus } = this.state;
     return (
-      <div>
+      <div className="col-lg-9" >
+      <div className="card mt-4 card-body">
+        <h2>Pending Requests</h2>
+        <span>&nbsp;</span>
         {
-          ownUsers.map(user => {
-            const ownRequest = organizationRequests.find(request => request.userId === user.id && request.organizationId === organization.id);
-            const { id, userId, organizationId } = ownRequest;
-            return (
-              ownRequest.status !== 'accepted' ? (
-                <div key={user.id}>
-                  {user.fullName}
-                  <button className="btn2 btn-danger btn-sm" style={{ float: 'right' }} onClick={() => deleteRequest(id)}>Delete Request</button>
-                  <span style={{ float: 'right' }}>&nbsp;</span>
-                  <button className="btn2 btn-warning btn-sm" style={{ float: 'right' }} disabled={requestStatus === 'declined'} onClick={() => decline(id, userId, organizationId)}>Decline</button>
-                  <span style={{ float: 'right' }}>&nbsp;</span>
-                  <button className="btn2 btn-info btn-sm" style={{ float: 'right' }} onClick={() => accept(id, userId, organizationId)}>Accept</button>
-                  <br />
-                  <br />
-                  {/*
-                    { requestStatus === 'accepted' && 'Accepted' }
-                    { requestStatus === 'declined' && 'Declined' }
-                  */}
-                </div>
-              ) : null
-            )
-          })
+          ownUsers.length === 0 ? (
+            <h4>There are currently no pending requests</h4>
+          ) : (
+            ownUsers.map(user => {
+              const ownRequest = organizationRequests.find(request => request.userId === user.id && request.organizationId === organization.id);
+              const { id, userId, organizationId } = ownRequest;
+              return (
+                ownRequest.status !== 'accepted' ? (
+                  <div key={user.id}>
+                    {user.fullName}
+                    <button className="btn2 btn-danger btn-sm" style={{ float: 'right' }} onClick={() => deleteRequest(id)}>Delete Request</button>
+                    <span style={{ float: 'right' }}>&nbsp;</span>
+                    <button className="btn2 btn-warning btn-sm" style={{ float: 'right' }} disabled={requestStatus === 'declined'} onClick={() => decline(id, userId, organizationId)}>Decline</button>
+                    <span style={{ float: 'right' }}>&nbsp;</span>
+                    <button className="btn2 btn-info btn-sm" style={{ float: 'right' }} onClick={() => accept(id, userId, organizationId)}>Accept</button>
+                    <br />
+                    <br />
+                  </div>
+                ) : null
+              )
+            })
+          )
         }
+        
+
+        
+      </div>
       </div>
     );
   }
