@@ -18,7 +18,10 @@ const OrganizationInfo = ({ organization, deleteOrganization }) => {
           <div className="col-lg-9" >
             <div className="card mt-4 card-body">
               <h2>{organization.name}</h2>
-              {organization.image && <img src={organization.image} style={{ height: '200px', width: 'auto' }} />}
+              {
+                organization.image && 
+                  <img src={organization.image} style={{ height: '200px', width: 'auto' }} />
+              }
               <OrganizationForm organization={organization} />
               <br />
               <button className="btn btn-danger" onClick={() => deleteOrganization(id)}>Delete Organization</button>
