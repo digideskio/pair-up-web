@@ -3,14 +3,18 @@ import { connect } from 'react-redux';
 import { updateOrganizationOnServer } from '../../store';
 
 class TextColor extends Component {
-  constructor(props) {
-    super(props);
-    const { organization } = props;
+  constructor() {
+    super();
     this.state = {
-      textColor: organization ? organization.textColor : '#000000'
+      textColor: '#000000'
     }
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
     this.onSave = this.onSave.bind(this)
+  }
+
+  componentDidMount() {
+    const { organization: { textColor } } = this.props;
+    this.setState({ textColor });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,28 +28,26 @@ class TextColor extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-    const { createOrUpdateOrganization, organization } = this.props;
-    const { id, name, organization_type, address, city, state, zip, contact_name, contact_phone, image, backgroundColor } = organization;
+    const { createOrUpdateOrganization, organization: { id } } = this.props;
     const { textColor } = this.state;
-    createOrUpdateOrganization({ id, name, organization_type, address, city, state, zip, contact_name, contact_phone, image, backgroundColor, textColor });
+    createOrUpdateOrganization({ id, textColor });
   }
 
   render() {
     const { handleChange, onSave } = this;
-    const { organization } = this.props
+    const { organization: { backgroundColor } } = this.props
     const { textColor } = this.state;
-    const colors = { Black: '#000000', White: '#fff', Grey: '#969696' }
     return (
       <div>
         <div>
           <select onChange={handleChange} value={textColor} className="ui selection dropdown" style={{marginBottom: '10px'}}>
-            <option value='#000000'> Black </option>
-            <option value='#fff'> White </option>
-            <option value='#969696'> Grey </option>
+            <option value='#000000'>Black</option>
+            <option value='#fff'>White</option>
+            <option value='#969696'>Grey</option>
           </select>
         </div>
         <div>
-          <button onClick={onSave} style={{ background: organization.backgroundColor, color: textColor }} className="btn">
+          <button onClick={onSave} style={{ background: backgroundColor, color: textColor }} className="btn">
             Save Text Color
           </button>
         </div>

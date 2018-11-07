@@ -4,14 +4,18 @@ import { SwatchesPicker } from 'react-color';
 import { updateOrganizationOnServer } from '../../store';
 
 class ColorPicker extends Component {
-  constructor(props) {
-    super(props);
-    const { organization } = props;
+  constructor() {
+    super();
     this.state = {
-      backgroundColor: organization ? organization.backgroundColor : '#fff'
+      backgroundColor: '#fff'
     }
-    this.handleColorChange = this.handleColorChange.bind(this)
-    this.onSave = this.onSave.bind(this)
+    this.handleColorChange = this.handleColorChange.bind(this);
+    this.onSave = this.onSave.bind(this);
+  }
+
+  componentDidMount() {
+    const { organization: { backgroundColor } } = this.props;
+    this.setState({ backgroundColor });
   }
 
   handleColorChange(ev) {
@@ -20,25 +24,24 @@ class ColorPicker extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-    const { createOrUpdateOrganization, organization } = this.props;
-    const { id, name, organization_type, address, city, state, zip, contact_name, contact_phone, image, textColor, latitude, longitude } = organization;
+    const { createOrUpdateOrganization, organization: { id } } = this.props;
     const { backgroundColor } = this.state;
-    createOrUpdateOrganization({ id, name, organization_type, address, city, state, zip, contact_name, contact_phone, image, textColor, backgroundColor, latitude, longitude });
+    createOrUpdateOrganization({ id, backgroundColor });
   }
 
   render() {
     const { handleColorChange, onSave } = this;
-    const { organization } = this.props
+    const { organization: { textColor } } = this.props
     const { backgroundColor } = this.state;
     return (
       <div>
         <SwatchesPicker
           name='backgroundColor' value={backgroundColor}
-          onChangeComplete={this.handleColorChange}
+          onChangeComplete={handleColorChange}
         />
         <br />
         <div>
-          <button className="btn" onClick={onSave} style={{ background: backgroundColor, color: organization.textColor }}>
+          <button className="btn" onClick={onSave} style={{ background: backgroundColor, color: textColor }}>
             Save Background Color
           </button>
         </div>
