@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 const CheckAuth = (Component) => {
   class AuthComponent extends React.Component {
     componentDidMount() {
-      this.checkAuth()
+      this.checkAuth();
     }
 
     componentWillReceiveProps(nextProps) {
-      this.checkAuth()
+      this.checkAuth();
     }
 
     checkAuth() {
@@ -18,8 +18,8 @@ const CheckAuth = (Component) => {
     render() {
       const { isAuthenticated } = this.props
       return (
-        <div>{ isAuthenticated ? <Component {...this.props} /> : null }</div>
-      )
+        <div>{ isAuthenticated ? <Component { ...this.props } /> : null }</div>
+      );
     }
   }
 

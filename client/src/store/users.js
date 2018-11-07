@@ -18,7 +18,7 @@ export const getUsersFromServer = () => {
   };
 };
 
-export const updateUserOnServer = (user) => {
+export const updateUserOnServer = (user, history) => {
   const { id } = user;
   const method = id ? 'put' : 'post';
   const url = id ? `/api/users/${id}` : '/api/users';
@@ -27,6 +27,13 @@ export const updateUserOnServer = (user) => {
     return axios[method](url, user)
       .then(result => result.data)
       .then(user => dispatch(action(user)))
+      .then(() => {
+        if(id) {
+          // console.log('org id exists');
+          return history.push(`/`);
+        }
+        // console.log('org id does not exist');
+      })
   };
 };
 

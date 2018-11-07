@@ -1,9 +1,10 @@
 /* eslint-disable */
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateUserOnServer } from '../../store';
+import { withRouter } from 'react-router-dom';
 
-class UserForm extends React.Component {
+class UserForm extends Component {
     constructor(props) {
       super(props);
       const { user } = this.props;
@@ -33,16 +34,14 @@ class UserForm extends React.Component {
     }
 
     onSave(ev) {
-      ev.preventDefault()
-      const { updateUser } = this.props;
+      ev.preventDefault();
+      const { updateUser, user } = this.props;
       const { id, firstName, lastName, email, password } = this.state
-      updateUser({ id, firstName, lastName, email, password });
+      updateUser({ id, firstName, lastName, email, password }, user.orgId);
     }
 
     render() {
       const { onChange, onSave } = this;
-      const { user, users } = this.props
-      const { firstName, lastName, email, password } = this.state;
       const fields = {
         firstName: 'First Name',
         lastName: 'Last Name',
@@ -51,37 +50,34 @@ class UserForm extends React.Component {
       }
       return (
         <div>
-          <div>
-            {
-              Object.keys(fields).map(field => (
-                <div key={field} className="form-group col-md-6">
-                  <label>{fields[field]}</label>
-                  <input
-                    className="form-control"
-                    name={field}
-                    onChange={onChange}
-                    value={this.state[field]}
-                    type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text' }
-                  />
-                </div>
-              ))
-            }
+          {
+            Object.keys(fields).map(field => (
+              <div key={field} className="form-group col-md-6">
+                <label>{fields[field]}</label>
+                <input
+                  className="form-control"
+                  name={field}
+                  onChange={onChange}
+                  value={this.state[field]}
+                  type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text' }
+                />
+              </div>
+            ))
+          }
           <button style={{'marginLeft':'15px'}} className="btn btn-info" onClick={onSave}>Save</button>
-          </div>
-
         </div>
       )
     }
   }
 
-  const mapState = (state, { user }) => {
+  const mapState = ({ user }) => {
     return { user }
   }
 
-  const mapDispatch = (dispatch) => {
+  const mapDispatch = (dispatch, { history }) => {
     return {
-      updateUser: (user) => dispatch(updateUserOnServer(user))
+      updateUser: (user) => dispatch(updateUserOnServer(user, history))
     }
   }
 
-  export default connect(mapState, mapDispatch)(UserForm);
+  export default withRouter(connect(mapState, mapDispatch)(UserForm));

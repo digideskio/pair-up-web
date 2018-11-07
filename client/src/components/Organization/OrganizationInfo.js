@@ -17,10 +17,10 @@ const OrganizationInfo = ({ organization, deleteOrganization }) => {
 
           <div className="col-lg-9" >
             <div className="card mt-4 card-body">
-              <h2>{organization.name}</h2>
+              <h2 style={{ textAlign: 'center' }}>{organization.name}</h2>
               {
                 organization.image && 
-                  <img src={organization.image} style={{ height: '200px', width: 'auto' }} />
+                  <img src={organization.image} style={{ width: '75%', margin: 'auto' }} />
               }
               <OrganizationForm organization={organization} />
               <br />

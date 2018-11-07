@@ -23,6 +23,9 @@ const Nav = ({ user, loggedIn, logout, orgId }) => {
                         user.organizationId ? (
                           <div className="navbar-nav ml-auto">
                             <li className="nav-item">
+                              <Link className="nav-link" to={`/users/${user.id}`}>My Account</Link>
+                            </li>
+                            <li className="nav-item">
                               <Link className="nav-link" to={`/organizations/${orgId}/account`}>My Dashboard</Link>
                             </li>
                             <li className="nav-item">

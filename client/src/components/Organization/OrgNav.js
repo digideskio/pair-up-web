@@ -37,7 +37,7 @@ const OrgNav = ({ id }) => {
           to={`/organizations/${id}/account`}
           className={`list-group-item${isActive(id, 'account')}`}
         >
-          Account Details
+          Organization Details
         </Link>
       </div>
     </div>

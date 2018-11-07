@@ -3,34 +3,36 @@ import { connect } from 'react-redux';
 import { updateOrganizationOnServer } from '../../store';
 import axios from 'axios';
 
-
 class AutoComplete extends Component {
   constructor() {
     super();
     this.state = {
       predictions: [],
-      input: ""
+      input: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      latitude: '',
+      longitude: '',
     };
     this.onChange = this.onChange.bind(this);
-    this.onSelect = this.onSelect.bind(this)
+    this.onSelect = this.onSelect.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onChange(ev) {
-    (ev.target.value.length <= 3) ?
-      (this.setState({ predictions: [] }))
-      : (
-        ev.target.value.length > 3 &&
-        axios.post('/api/autoComplete/getpredictions', { input: ev.target.value })
-          .then(res => res.data)
-          .then(predictions => {
-            this.setState({ predictions })
-          })
-      );
-
-  };
+    const { value } = ev.target;
+    if(value.length <= 3) {
+      this.setState({ predictions: [] });
+    } else {
+      axios.post('/api/autoComplete/getpredictions', { input: value })
+        .then(res => res.data)
+        .then(predictions => this.setState({ predictions }))
+    }
+  }
 
   onSelect(placeId) {
-    const { createOrUpdateOrganization, organization } = this.props;
     axios.post('/api/autoComplete/getplace', { query: placeId })
       .then(res => res.data)
       .then((_address) => {
@@ -38,22 +40,34 @@ class AutoComplete extends Component {
         let address = _address.formatted_address.split(', ');
         address[2] = address[2].split(' ');
         const { lat, lng } = _address.geometry.location;
-        organization.address = address[0],
-          organization.city = address[1],
-          organization.state = address[2][0],
-          organization.zip = address[2][1],
-          organization.latitude = lat,
-          organization.longitude = lng
-        createOrUpdateOrganization(organization);
-        this.setState({ predictions: [] })
-      }
-      )
+        this.setState({
+          address: address[0],
+          city: address[1],
+          state: address[2][0],
+          zip: address[2][1],
+          latitude: lat,
+          longitude: lng,
+          predictions: []
+        })
+      })
+      .then(() => console.log(this.state))
       .catch(err => console.log(err))
+  }
+
+  onSubmit(ev) {
+    ev.preventDefault();
+    const { address, city, state, zip, latitude, longitude } = this.state;
+    const { createOrUpdateOrganization, organization } = this.props;
+    const { avatar, backgroundColor, contact_name, contact_phone, id, image, name, organization_type, textColor } = organization;
+    createOrUpdateOrganization({
+      address, city, state, zip, latitude, longitude,
+      avatar, backgroundColor, contact_name, contact_phone, id, image, name, organization_type, textColor
+    });
   }
 
   render() {
     const { predictions } = this.state;
-    const { onChange, onSelect } = this;
+    const { onChange, onSelect, onSubmit } = this;
     return (
       <div>
         <input
@@ -61,12 +75,26 @@ class AutoComplete extends Component {
           placeholder='Search your Address'
           className='form-control'
         />
-
+        <button
+          className="btn btn-info"
+          style={{ 'marginTop': '20px' }}
+          onClick={onSubmit}
+        >
+          Change Address
+        </button>
         <ul className='list-group'>
-          {predictions.length ? predictions.map(pred => (
-            <li className='list-group-item' key={pred.place_id}
-              onClick={() => onSelect(pred.place_id)}>{pred.description}</li>
-          )) : null}
+          {
+            predictions.length ? (
+              predictions.map(pred => {
+                return (
+                  <li className='list-group-item' key={pred.place_id}
+                  onClick={() => onSelect(pred.place_id)}>
+                  {pred.description}
+                </li>
+                );
+              })
+            ) : null
+          }
         </ul>
       </div>
     )

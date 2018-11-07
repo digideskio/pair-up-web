@@ -63,7 +63,6 @@ class OrganizationForm extends Component {
     const { name, organization_type, address, city, state, zip, contact_name, contact_phone } = this.state;
     const { organization } = this.props;
     const url = location.hash.slice(1)
-    // if(!organization) return null
     return (
       <div>
         {url === '/organizations/create' ?
