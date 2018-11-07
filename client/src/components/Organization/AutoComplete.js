@@ -35,34 +35,29 @@ class AutoComplete extends Component {
   onSelect(placeId) {
     axios.post('/api/autoComplete/getplace', { query: placeId })
       .then(res => res.data)
-      .then((_address) => {
-        _address = _address[0];
-        let address = _address.formatted_address.split(', ');
-        address[2] = address[2].split(' ');
-        const { lat, lng } = _address.geometry.location;
+      .then(locusData => {
+        const addressArr = locusData[0].formatted_address.split(', ');
+        const [ address, city, stateZip, country ] = addressArr;
+        const [ state, zip ] = stateZip.split(' ');
+        const { lat, lng } = locusData[0].geometry.location;
         this.setState({
-          address: address[0],
-          city: address[1],
-          state: address[2][0],
-          zip: address[2][1],
+          address,
+          city,
+          state,
+          zip,
           latitude: lat,
           longitude: lng,
           predictions: []
         })
       })
-      .then(() => console.log(this.state))
       .catch(err => console.log(err))
   }
 
   onSubmit(ev) {
     ev.preventDefault();
     const { address, city, state, zip, latitude, longitude } = this.state;
-    const { createOrUpdateOrganization, organization } = this.props;
-    const { avatar, backgroundColor, contact_name, contact_phone, id, image, name, organization_type, textColor } = organization;
-    createOrUpdateOrganization({
-      address, city, state, zip, latitude, longitude,
-      avatar, backgroundColor, contact_name, contact_phone, id, image, name, organization_type, textColor
-    });
+    const { createOrUpdateOrganization, id } = this.props;
+    createOrUpdateOrganization({ id, address, city, state, zip, latitude, longitude });
   }
 
   render() {
@@ -102,7 +97,8 @@ class AutoComplete extends Component {
 }
 
 const mapState = ({}, { organization }) => {
-  return { organization }
+  const id = organization.id;
+  return { id }
 }
 
 const mapDispatch = (dispatch) => {
