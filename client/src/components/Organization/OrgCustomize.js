@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { deleteFormFromServer } from '../../store';
 import AddForm from './AddForm';
 import ColorPicker from './ColorPicker';
-import TextColor from './TextColor';
 
 import OrgNav from './OrgNav';
 
@@ -36,20 +35,8 @@ const OrgCustomize = ({ organization, id, ownForms, forms, deleteForm }) => {
               <span>&nbsp;</span>
               <span>&nbsp;</span>
 
-
-
-              <h2>App's Background Color</h2>
-              <span>&nbsp;</span>
               <ColorPicker organization={organization} />
-              <span>&nbsp;</span>
-              <span>&nbsp;</span>
-
-
-              <h2>App's Text Color</h2>
-              <span>&nbsp;</span>
-              <TextColor organization={organization} />
-              <span>&nbsp;</span>
-              <span>&nbsp;</span>
+       
             </div>
           </div>
 
