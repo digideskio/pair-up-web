@@ -15,7 +15,6 @@ const AllOrganizationRequests = ({ users, organizations, organizationRequests, d
                   const user = users.find(user => user.id === request.userId)
                   const organization = organizations.find(organization => organization.id === request.organizationId)
                   const checkedOrg = user.checkedInId ? organizations.find(org => org.id === user.checkedInId) : null
-                  // console.log(user, checkedOrg, request)
                   return (
                     <div key={request.id}>
                       {organization.name} requested by {user.fullName} ({request.status}) - {user.checkedInId ? `Checked into ${checkedOrg.name}` : 'Not Checked In'}

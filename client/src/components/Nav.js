@@ -7,42 +7,51 @@ const Nav = ({ user, loggedIn, logout, orgId }) => {
   const url = location.hash.slice(1)
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-color fixed-top">
-        <div className="container">
-          <a className="navbar-brand" href="#">Pair Up!</a>
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
+      <nav className='navbar navbar-expand-lg navbar-dark bg-color fixed-top'>
+        <div className='container'>
+          <a className='navbar-brand' href='#'>Pair Up!</a>
+          <button
+            className='navbar-toggler'
+            type='button'
+            data-toggle='collapse'
+            data-target='#navbarResponsive'
+            aria-controls='navbarResponsive'
+            aria-expanded='false'
+            aria-label='Toggle navigation'
+          >
+            <span className='navbar-toggler-icon'></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarResponsive">
-            <ul className="navbar-nav ml-auto">
+          <div className='collapse navbar-collapse' id='navbarResponsive'>
+            <ul className='navbar-nav ml-auto'>
               {
                 loggedIn ? (
                   <div>
                     {
-                      user.userStatus === 'admin' ?
+                      user.userStatus === 'admin' ? (
                         user.organizationId ? (
-                          <div className="navbar-nav ml-auto">
-                            <li className="nav-item">
-                              <Link className="nav-link" to={`/users/${user.id}`}>My Account</Link>
+                          <div className='navbar-nav ml-auto'>
+                            <li className='nav-item'>
+                              <Link className='nav-link' to={`/users/${user.id}`}>My Account</Link>
                             </li>
-                            <li className="nav-item">
-                              <Link className="nav-link" to={`/organizations/${orgId}/account`}>My Dashboard</Link>
+                            <li className='nav-item'>
+                              <Link className='nav-link' to={`/organizations/${orgId}/account`}>My Dashboard</Link>
                             </li>
-                            <li className="nav-item">
-                              <a className="nav-link" onClick={logout}>Log out</a>
+                            <li className='nav-item'>
+                              <a className='nav-link' onClick={logout}>Log out</a>
                             </li>
                           </div>
                         ) : (
                           <div>
                             <span>
-                              <Link className="nav-item" to={`/organizations/create`}>Create Organization</Link>
+                              <Link className='nav-item' to={`/organizations/create`}>Create Organization</Link>
                             </span>
                           </div>
+                        )
                       ) : null
                     }
                   </div>
                 ) : (
-                  <span className="active blue item">
+                  <span className='active blue item'>
                     <Link to='/login'>Log In</Link>
                   </span>
                 )

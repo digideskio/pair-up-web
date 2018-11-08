@@ -12,7 +12,6 @@ class ColorPicker extends Component {
       toggle: 'backgroundColor'
     }
     this.handleColorChange = this.handleColorChange.bind(this);
-    // this.handleTextChange = this.handleTextChange.bind(this);
     this.toggleColors = this.toggleColors.bind(this);
     this.onSave = this.onSave.bind(this);
   }
@@ -23,21 +22,14 @@ class ColorPicker extends Component {
   }
 
   handleColorChange(ev) {
-    // const { hex, target: { name } } = ev;
+    const { hex } = ev;
     const { toggle } = this.state;
-    this.setState({ [toggle]: ev.hex });
+    this.setState({ [toggle]: hex });
   }
-
-  // handleTextChange(ev) {
-  //   this.setState({ textColor: ev.target.value });
-  // }
 
   toggleColors(ev) {
     const { value } = ev.target;
-    // const { backgroundColor, textColor } = this.state;
     this.setState({ toggle: value });
-    // if(value === 'bg') return backgroundColor;
-    // else if(value === 'text') return textColor;
   }
 
   onSave(ev) {
@@ -48,55 +40,31 @@ class ColorPicker extends Component {
   }
 
   render() {
-    const { handleColorChange, toggleColors, handleTextChange, onSave } = this;
+    const { handleColorChange, toggleColors, onSave } = this;
     const { backgroundColor, textColor, toggle } = this.state;
     const toggled = toggle === 'backgroundColor' ? backgroundColor : textColor;
-    console.log('toggle:', this.state.toggle)
-    console.log('backgroundColor:', backgroundColor)
-    console.log('textColor:', textColor)
-    console.log('--------')
     return (
       <div>
-
-        <h2>App's Background Color</h2>
-
+        <h2>Select Your Color Theme</h2>
+        <h4>This will appear on your mobile page</h4>
         <SwatchesPicker
-          // name={toggle}
           value={toggled}
           onChangeComplete={handleColorChange}
         />
         <br />
-
-        <div>
-          <select onChange={toggleColors} value={toggle} className="ui selection dropdown" style={{marginBottom: '10px'}}>
-            <option value='backgroundColor'>Background Color</option>
-            <option value='textColor'>Text Color</option>
-          </select>
+        <div className="row">
+          <div className="form-group col-md-4">
+            <select onChange={toggleColors} value={toggle} className="ui selection dropdown form-control" style={{marginBottom: '10px'}}>
+              <option value='backgroundColor'>Background Color</option>
+              <option value='textColor'>Text Color</option>
+            </select>
+          </div>
+          <div className="col-md-6">
+            <button onClick={onSave} style={{ background: backgroundColor, color: textColor }} className="btn">
+              Save New Color Scheme
+            </button>
+          </div>
         </div>
-
-        {/* <div>
-          <button onClick={onSave} style={{ background: backgroundColor, color: textColor }} className="btn">
-            Save New Color Scheme
-          </button>
-        </div>
-
- <br /> */}
-        {/* <h2>App's Text Color</h2> */}
-
-        {/* <div>
-          <select onChange={handleTextChange} value={textColor} className="ui selection dropdown" style={{marginBottom: '10px'}}>
-            <option value='#000000'>Black</option>
-            <option value='#fff'>White</option>
-            <option value='#969696'>Grey</option>
-          </select>
-        </div> */}
-
-        <div>
-          <button onClick={onSave} style={{ background: backgroundColor, color: textColor }} className="btn">
-            Save New Color Scheme
-          </button>
-        </div>
-
       </div>
     )
   }

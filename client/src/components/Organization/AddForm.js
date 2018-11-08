@@ -1,36 +1,31 @@
 /* eslint-disable */
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createUserOrganizationOnServer, createFormOnServer } from '../../store';
+import { createFormOnServer } from '../../store';
 
-class AddForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-    }
+class AddForm extends Component {
+  constructor() {
+    super();
+    this.state = { name: '' };
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
   }
 
   onChange(ev) {
-    const change = {}
-    change[ev.target.name] = ev.target.value
-    this.setState(change);
+    const { name, value } = ev.target;
+    this.setState({ [name]: value });
   }
 
   onSave(ev) {
-    ev.preventDefault()
-    const { createForm } = this.props;
-    const name = this.state.name;
-    const organizationId = this.props.organization.id;
-    createForm({ name: name, organizationId: organizationId });
+    ev.preventDefault();
+    const { createForm, organization: { id }} = this.props;
+    const { name } = this.state;
+    createForm({ name, organizationId: id });
     this.setState({ name: '' });
   }
 
   render() {
     const { onChange, onSave } = this;
-    const { organization } = this.props
     const { name } = this.state;
     return (
       <div className="row">
@@ -41,12 +36,12 @@ class AddForm extends React.Component {
           <button className="field" onClick={onSave} className="btn btn-info">Add Category</button>
         </div>
       </div>
-    )
+    );
   }
 }
 
-const mapState = ({ users }) => {
-  return { users }
+const mapState = ({ users }, { organization }) => {
+  return { users, organization }
 }
 
 const mapDispatch = dispatch => {
