@@ -14,8 +14,6 @@ const OrganizationList = ({ organizations, count, pluralize }) => {
               <h2>Organizations</h2>
               <h4>Add an organization</h4>
               <OrganizationForm />
-
-
               <h4 style={{ 'marginTop': '20px' }}>There {pluralize[0]} currently {count} Organization{pluralize[1]}:</h4>
               <ol style={{ type: 1 }} className="list-group list-group-flush">
                 {

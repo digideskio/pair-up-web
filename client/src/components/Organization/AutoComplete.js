@@ -8,6 +8,7 @@ class AutoComplete extends Component {
     super();
     this.state = {
       predictions: [],
+      // fullAddress: '',
       input: '',
       address: '',
       city: '',
@@ -23,6 +24,7 @@ class AutoComplete extends Component {
 
   onChange(ev) {
     const { value } = ev.target;
+    this.setState({ input: value });
     if(value.length <= 3) {
       this.setState({ predictions: [] });
     } else {
@@ -36,11 +38,13 @@ class AutoComplete extends Component {
     axios.post('/api/autoComplete/getplace', { query: placeId })
       .then(res => res.data)
       .then(locusData => {
-        const addressArr = locusData[0].formatted_address.split(', ');
+        const fullAddress = locusData[0].formatted_address;
+        const addressArr = fullAddress.split(', ');
         const [ address, city, stateZip, country ] = addressArr;
         const [ state, zip ] = stateZip.split(' ');
         const { lat, lng } = locusData[0].geometry.location;
         this.setState({
+          input: fullAddress,
           address,
           city,
           state,
@@ -58,39 +62,46 @@ class AutoComplete extends Component {
     const { address, city, state, zip, latitude, longitude } = this.state;
     const { createOrUpdateOrganization, id } = this.props;
     createOrUpdateOrganization({ id, address, city, state, zip, latitude, longitude });
+    this.setState({ input: '' });
   }
 
   render() {
-    const { predictions } = this.state;
+    const { predictions, input } = this.state;
     const { onChange, onSelect, onSubmit } = this;
     return (
-      <div>
-        <input
-          onChange={onChange}
-          placeholder='Search your Address'
-          className='form-control'
-        />
-        <button
-          className="btn btn-info"
-          style={{ 'marginTop': '20px' }}
-          onClick={onSubmit}
-        >
-          Change Address
-        </button>
-        <ul className='list-group'>
+      <div className='row'>
+        <div className='col'>
+          <input
+            onChange={onChange}
+            value={input}
+            placeholder='Search your Address'
+            className='form-control'
+          />
           {
             predictions.length ? (
-              predictions.map(pred => {
-                return (
-                  <li className='list-group-item' key={pred.place_id}
-                  onClick={() => onSelect(pred.place_id)}>
-                  {pred.description}
-                </li>
-                );
-              })
+              <ul className='list-group'>
+              {
+                predictions.map(pred => {
+                  return (
+                    <li className='list-group-item' key={pred.place_id}
+                    onClick={() => onSelect(pred.place_id)}>
+                    {pred.description}
+                  </li>
+                  );
+                })
+              }
+            </ul>
             ) : null
           }
-        </ul>
+        </div>
+        <div className='col'>
+          <button
+            className="btn btn-info"
+            onClick={onSubmit}
+          >
+            Change Address
+          </button>
+        </div>
       </div>
     )
   }

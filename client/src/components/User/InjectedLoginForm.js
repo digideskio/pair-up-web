@@ -90,7 +90,7 @@ class InjectedLoginForm extends React.Component {
         })
     }
     else {
-      attemptLogin({ email, password })
+      attemptLogin({ email, password });
     }
   }
 

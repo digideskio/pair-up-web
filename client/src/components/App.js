@@ -16,7 +16,7 @@ import AllOrganizationRequests from './Organization/AllOrganizationRequests';
 import UserRequests from './Organization/UserRequests';
 import OrganizationInfo from './Organization/OrganizationInfo';
 import OrgUsers from './Organization/OrgUsers';
-import OrgRequests from './Organization/OrgRequests';
+import OrganizationRequests from './Organization/OrganizationRequests';
 import OrgCustomize from './Organization/OrgCustomize';
 import LoginForm from './User/LoginForm';
 import OrganizationForm from './Organization/OrganizationForm';
@@ -39,15 +39,15 @@ class App extends React.Component {
   }
 
   render() {
-    const OrganizationsMaster = CheckMaster(OrganizationList)
-    const UsersMaster = CheckMaster(Users)
-    const UserInfoAuth = CheckAuth(UserInfo)
-    const OrganizationInfoAuth = CheckAuth(OrganizationInfo)
-    const OrgUsersAuth = CheckAuth(OrgUsers)
-    const OrgRequestsAuth = CheckAuth(OrgRequests)
-    const OrgCustomizeAuth = CheckAuth(OrgCustomize)
-    const OrgFormAuth = CheckAuth(OrganizationForm)
-
+    const OrganizationsMaster = CheckMaster(OrganizationList);
+    const UsersMaster = CheckMaster(Users);
+    const UserInfoAuth = CheckAuth(UserInfo);
+    const OrganizationInfoAuth = CheckAuth(OrganizationInfo);
+    const OrgUsersAuth = CheckAuth(OrgUsers);
+    const OrgRequestsAuth = CheckAuth(OrganizationRequests);
+    const OrgCustomizeAuth = CheckAuth(OrgCustomize);
+    const OrgFormAuth = CheckAuth(OrganizationForm);
+    
     return (
       <Router>
         <div>

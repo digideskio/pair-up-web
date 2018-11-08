@@ -47,19 +47,18 @@ class ColorPicker extends Component {
       <div>
         <h2>Select Your Color Theme</h2>
         <h4>This will appear on your mobile page</h4>
-        <SwatchesPicker
-          value={toggled}
-          onChangeComplete={handleColorChange}
-        />
-        <br />
         <div className="row">
-          <div className="form-group col-md-4">
-            <select onChange={toggleColors} value={toggle} className="ui selection dropdown form-control" style={{marginBottom: '10px'}}>
+          <div className="col-md-6">
+            <SwatchesPicker
+              value={toggled}
+              onChangeComplete={handleColorChange}
+            />
+          </div>
+          <div className="form-group col-md-5">
+            <select onChange={toggleColors} value={toggle} className="ui selection dropdown form-control" style={{ marginBottom: '10px' }}>
               <option value='backgroundColor'>Background Color</option>
               <option value='textColor'>Text Color</option>
             </select>
-          </div>
-          <div className="col-md-6">
             <button onClick={onSave} style={{ background: backgroundColor, color: textColor }} className="btn">
               Save New Color Scheme
             </button>

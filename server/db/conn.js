@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
-const conn = new Sequelize(process.env.DATABASE_URL || 'postgres://localhost/capstone_db', {
-  logging: false
-});
+const localDb = 'postgres://localhost/capstone_db';
+const database = process.env.DATABASE_URL || localDb;
+
+const conn = new Sequelize(database, { logging: false });
 
 module.exports = conn;

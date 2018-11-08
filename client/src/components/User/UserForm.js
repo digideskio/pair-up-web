@@ -5,18 +5,23 @@ import { updateUserOnServer } from '../../store';
 import { withRouter } from 'react-router-dom';
 
 class UserForm extends Component {
-    constructor(props) {
-      super(props);
-      const { user } = this.props;
+    constructor() {
+      super();
       this.state = {
-        id: user ? user.id : undefined,
-        firstName: user ? user.firstName : '',
-        lastName: user ? user.lastName : '',
-        email: user ? user.email : '',
-        password: user ? user.password : '',
+        id: undefined,
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
       }
       this.onChange = this.onChange.bind(this);
       this.onSave = this.onSave.bind(this);
+    }
+
+    componentDidMount() {
+      console.log(this.props.id)
+      const { user: { id, firstName, lastName, email, password } } = this.props;
+      this.setState({ id, firstName, lastName, email, password });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -28,9 +33,8 @@ class UserForm extends Component {
     }
 
     onChange(ev) {
-      const change = {}
-      change[ev.target.name] = ev.target.value
-      this.setState(change);
+      const { name, value } = ev.target;
+      this.setState({ [name]: value });
     }
 
     onSave(ev) {
@@ -52,10 +56,10 @@ class UserForm extends Component {
         <div>
           {
             Object.keys(fields).map(field => (
-              <div key={field} className="form-group col-md-6">
+              <div key={field} className='form-group col-md-6'>
                 <label>{fields[field]}</label>
                 <input
-                  className="form-control"
+                  className='form-control'
                   name={field}
                   onChange={onChange}
                   value={this.state[field]}
@@ -64,13 +68,13 @@ class UserForm extends Component {
               </div>
             ))
           }
-          <button style={{'marginLeft':'15px'}} className="btn btn-info" onClick={onSave}>Save</button>
+          <button style={{ marginLeft: '15px' }} className='btn btn-info' onClick={onSave}>Save</button>
         </div>
       )
     }
   }
 
-  const mapState = ({ user }) => {
+  const mapState = (state, { user }) => {
     return { user }
   }
 

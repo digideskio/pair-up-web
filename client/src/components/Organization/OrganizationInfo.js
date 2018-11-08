@@ -20,7 +20,7 @@ const OrganizationInfo = ({ organization, deleteOrganization }) => {
               <h2 style={{ textAlign: 'center' }}>{organization.name}</h2>
               {
                 organization.image && 
-                  <img src={organization.image} style={{ width: '75%', margin: 'auto' }} />
+                  <img src={organization.image} style={{ width: '75%', margin: 'auto auto 15px auto', borderRadius: '5px', boxShadow: '0px 0px 5px gray' }} />
               }
               <OrganizationForm organization={organization} />
               <br />

@@ -6,6 +6,10 @@ import { Link } from 'react-router-dom';
 
 import OrgNav from './OrgNav';
 
+const instructions = [
+  'This is a list of all the members that belong to your organization. You can remove members, or you can edit their info if they need a new password.'
+];
+
 const OrgUsers = ({ organization, id, ownUsers, removeUser, userOrganizations }) => {
   if (!organization) return null
   var orgId = id;
@@ -13,13 +17,11 @@ const OrgUsers = ({ organization, id, ownUsers, removeUser, userOrganizations })
     <div className="org-background">
       <div className="container">
         <div className="row">
-
           <OrgNav id={orgId} />
-
           <div className="col-lg-9" >
             <div className="card mt-4 card-body">
               <h2>{organization.name}: Members</h2>
-              <span>&nbsp;</span>
+              { instructions.map((line, i) => <p key={i} style={{ fontSize: '11pt'}}>{line}</p>) }
               <ul className="list-group list-group-flush">
                 {
                   ownUsers.length === 0 ? (
@@ -42,9 +44,7 @@ const OrgUsers = ({ organization, id, ownUsers, removeUser, userOrganizations })
                   )
                 }
               </ul>
-              <span>&nbsp;</span>
-              <span>&nbsp;</span>
-              <AddUserForm organization={organization} />
+              <AddUserForm organization={organization}/>
 
             </div>
           </div>
