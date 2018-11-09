@@ -9,10 +9,11 @@ const CheckMaster = (Component) => {
       return (
         <div>
           {
-            user.userStatus === 'master' ?
-              <Component {...this.props } />
-              :
+            user.userStatus === 'master' ? (
+              <Component { ...this.props } />
+            ) : (
               <NotMaster />
+            )
           }
         </div>
       )

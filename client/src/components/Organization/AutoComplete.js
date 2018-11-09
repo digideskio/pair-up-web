@@ -96,7 +96,7 @@ class AutoComplete extends Component {
         </div>
         <div className='col'>
           <button
-            className="btn btn-info"
+            className='btn btn-info'
             onClick={onSubmit}
           >
             Change Address

@@ -35,12 +35,12 @@ class OrganizationRequests extends Component {
     const { accept, decline } = this;
     const { requestStatus } = this.state;
     return (
-      <div className="org-background">
-        <div className="container">
-          <div className="row">
+      <div className='org-background'>
+        <div className='container'>
+          <div className='row'>
             <OrgNav id={id} />
-            <div className="col-lg-9" >
-              <div className="card mt-4 card-body">
+            <div className='col-lg-9'>
+              <div className='card mt-4 card-body'>
                 <h2>Pending Requests</h2>
                 { instructions.map((line, i) => <p key={i} style={{ fontSize: '11pt'}}>{line}</p>) }
                 {
@@ -57,13 +57,13 @@ class OrganizationRequests extends Component {
                           <div key={user.id} style={{ padding: '5px 15px', backgroundColor: bgColor }}>
                           <div>
                             {user.fullName}
-                            <button className="btn2 btn-danger btn-sm" style={floatBtn} onClick={() => deleteRequest(id)}>
+                            <button className='btn2 btn-danger btn-sm' style={floatBtn} onClick={() => deleteRequest(id)}>
                               Delete Request
                             </button>
-                            <button className="btn2 btn-warning btn-sm" style={floatBtn} disabled={requestStatus === 'declined'} onClick={() => decline(reqId, userId, organizationId)}>
+                            <button className='btn2 btn-warning btn-sm' style={floatBtn} disabled={requestStatus === 'declined'} onClick={() => decline(reqId, userId, organizationId)}>
                               Decline
                             </button>
-                            <button className="btn2 btn-info btn-sm" style={floatBtn} onClick={() => accept(reqId, userId, organizationId)}>
+                            <button className='btn2 btn-info btn-sm' style={floatBtn} onClick={() => accept(reqId, userId, organizationId)}>
                               Accept
                             </button>
                             </div>

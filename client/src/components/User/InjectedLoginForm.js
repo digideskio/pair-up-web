@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { attemptLogin, signup } from '../../store'
@@ -10,9 +10,9 @@ const emailRegex = RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA
 const passwordRegexMedium = RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
 const passwordRegexStrong = RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 
-class InjectedLoginForm extends React.Component {
-  constructor(props) {
-    super(props)
+class InjectedLoginForm extends Component {
+  constructor() {
+    super()
     this.state = {
       firstName: '',
       lastName: '',
@@ -26,6 +26,7 @@ class InjectedLoginForm extends React.Component {
     }
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
+    this.generateInputAndErrors = this.generateInputAndErrors.bind(this);
     this.handlePaymentChange = this.handlePaymentChange.bind(this);
     this.validators = {
       firstName: (value) => {
@@ -70,7 +71,8 @@ class InjectedLoginForm extends React.Component {
   }
 
   onSubmit(ev) {
-    ev.preventDefault()
+    ev.preventDefault();
+    // break this apart when there's time
     const { firstName, lastName, email, password, userStatus, billingFirstName, billingLastName } = this.state
     const { attemptLogin, attemptSignup, url } = this.props
     if (url === '/signup') {
@@ -94,25 +96,59 @@ class InjectedLoginForm extends React.Component {
     }
   }
 
+  generateInputAndErrors(key) {
+    const { errors } = this.state;
+    const fields = {
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      email: 'Email Address',
+      password: 'Password',
+      billingFirstName: 'Billing First Name',
+      billingLastName: 'Billing Last Name'
+    }
+    let type = 'text'
+    if(key === 'email') type = 'email';
+    if(key === 'password') type = 'password';
+    return (
+      <div className='form-group col-md-6'>
+        <label>{fields[key]}</label>
+        <input
+          className='form-control'
+          name={key}
+          placeholder={fields[key]}
+          onChange={this.onChange}
+          value={this.state[key]}
+          type={type}
+        />
+        {
+          errors[key] &&
+            <div className='ui error message'>
+              <p>{errors[key]}</p>
+            </div>
+        }
+      </div>
+    );
+  }
+
   render() {
     const url = location.hash.slice(1)
-    const { onChange, onSubmit } = this
+    const { onChange, onSubmit, generateInputAndErrors } = this
     const { user } = this.props
     const { firstName, lastName, password, email, errors, billingFirstName, billingLastName } = this.state
     const passwordTestStrong = passwordRegexStrong.test(password)
     const passwordTestMedium = passwordRegexMedium.test(password)
     return (
-      <div className="login-form">
+      <div className='login-form'>
         {
           user.id ? (
             <div>
               <h4> You are already logged in </h4>
               <Link to='/'>
-                <button className="btn btn-info">Back home</button>
+                <button className='btn btn-info'>Back home</button>
               </Link>
               &nbsp;
               <Link to={`/users/${user.id}`}>
-                <button className="btn btn-secondary">My Account</button>
+                <button className='btn btn-secondary'>My Account</button>
               </Link>
             </div>
           ) : (
@@ -121,164 +157,211 @@ class InjectedLoginForm extends React.Component {
               <div>
                 {
                   url === '/signup' ? (
-                    <div className="ui form error">
-                      <div className="form-row">
-                        <div className="form-group col-md-6">
+                    <div className='ui form error'>
+                      <div className='form-row'>
+
+                      {/* 
+                        <div className='form-group col-md-6'>
+                         
                           <label>First Name</label>
-                          <Input
-                            name="firstName"
+
+                           <Input
+                            name='firstName'
+                            // placeholder='First Name'
                             onChange={onChange}
                             value={firstName}
-                            type="text"
+                            type='text'
                           />
-                          {
+                           {
                             errors.firstName &&
-                              <div className="ui error message">
+                              <div className='ui error message'>
                                 <p>{errors.firstName}</p>
                               </div>
-                          }
-                        </div>
-                        <div className="form-group col-md-6">
+                          } 
+                         </div>
+                          */}
+
+                          { generateInputAndErrors('firstName') }
+
+
+                  
+
+                 {/*        <div className='form-group col-md-6'>
                           <label>Last Name</label>
                           <Input
-                            name="lastName"
+                            name='lastName'
                             onChange={onChange}
                             value={lastName}
-                            type="text"
+                            type='text'
                           />
                           {
                             errors.lastName &&
-                              <div className="ui error message">
+                              <div className='ui error message'>
                                 <p>{errors.lastName}</p>
                               </div>
                           }
-                        </div>
+                        </div> */}
+
+                        { generateInputAndErrors('lastName') }
+
+
+
                       </div>
-                      <div className="form-row">
-                        <div className="form-group col-md-6">
+
+
+
+                      <div className='form-row'>
+
+
+                      {/*   <div className='form-group col-md-6'>
                           <label>Email</label>
                           <Input
-                            name="email"
+                            name='email'
                             onChange={onChange}
                             value={email}
                             type='email'
                           />
                           {
                             errors.email &&
-                              <div className="ui error message">
+                              <div className='ui error message'>
                                 <p>{errors.email}</p>
                               </div>
                           }
-                        </div>
-                        <div className="form-group col-md-6">
-                          <div className="field">
+                        </div> */}
+
+                        { generateInputAndErrors('email') }
+
+
+
+
+                        <div className='form-group col-md-6'>
+                          <div className='field'>
                             <label>Password</label>
                             <Input
-                              name="password"
+                              name='password'
                               onChange={onChange}
                               value={password}
-                              type="password"
+                              type='password'
                             />
                             {
                               errors.password &&
-                                <div className="ui error message">
+                                <div className='ui error message'>
                                   <p>{errors.password}</p>
                                 </div>
                             }
                           </div>
-                          <div className="progress-wrapper">
+
+
+                          <div className='progress-wrapper'>
                             {
                               passwordTestStrong ? (
-                                <Progress value={100} color={"success"} />
+                                <Progress value={100} color={'success'} />
                               ) : (
                                 passwordTestMedium ? (
-                                  <Progress value={67} color={"warning"} />
+                                  <Progress value={67} color={'warning'} />
                                 ) : (
                                   password.length > 3 ? (
-                                    <Progress value={33} color={"danger"} />
+                                    <Progress value={33} color={'danger'} />
                                   ) : (
-                                    <Progress value={0} color={"danger"} />
+                                    <Progress value={0} color={'danger'} />
                                   )
                                 )
                               )
                             }
                           </div>
+
                         </div>
+
                       </div>
-                      <div className="form-row">
-                        <div className="form-group col-md-6">
-                        <label>Billing First Name</label>
-                        <Input
-                          name="billingFirstName"
-                          onChange={onChange}
-                          value={billingFirstName}
-                          type="text"
-                        />
-                        {
-                          errors.billingFirstName &&
-                            <div className="ui error message">
-                              <p>{errors.billingFirstName}</p>
-                            </div>
-                        }
-                      </div>
-                      <div className="form-group col-md-6">
-                        <label>Billing Last Name</label>
+
+
+                      <div className='form-row'>
+
+
+                  {/*       <div className='form-group col-md-6'>
+                          <label>Billing First Name</label>
                           <Input
-                            name="billingLastName"
+                            name='billingFirstName'
                             onChange={onChange}
-                            value={billingLastName}
-                            type="text"
+                            value={billingFirstName}
+                            type='text'
                           />
                           {
-                            errors.billingLastName &&
-                              <div className="ui error message">
-                                <p>{errors.billingLastName}</p>
+                            errors.billingFirstName &&
+                              <div className='ui error message'>
+                                <p>{errors.billingFirstName}</p>
                               </div>
                           }
-                        </div>
+                        </div> */}
+
+                        { generateInputAndErrors('billingFirstName') }
+
+                    {/* 
+                      <div className='form-group col-md-6'>
+                        <label>Billing Last Name</label>
+                        <Input
+                          name='billingLastName'
+                          onChange={onChange}
+                          value={billingLastName}
+                          type='text'
+                        />
+                        {
+                          errors.billingLastName &&
+                            <div className='ui error message'>
+                              <p>{errors.billingLastName}</p>
+                            </div>
+                        }
+                      </div> */}
+
+                      { generateInputAndErrors('billingLastName') }
+
+
+
                       </div>
+
+
                       <div style={{ 'marginTop': '20px' }}></div>
                       <div className='form-group'>
                         <CardElement onChange={this.handlePaymentChange} />
                       </div>
-                      <div className="ui divider"></div>
+                      <div className='ui divider'></div>
                     </div>
                   ) : (
-                    <div className="ui form">
-                      <div className="field">
+                    <div className='ui form'>
+                      <div className='field'>
                         <label>Email</label>
                         <Input
-                          name="email"
+                          name='email'
                           onChange={onChange}
                           value={email}
-                          type='text'
+                          type='email'
                         />
-                        { errors.email && <div className="help-block">{errors.email}</div> }
+                        { errors.email && <div className='help-block'>{errors.email}</div> }
                       </div>
-                      <div className="field">
+                      <div className='field'>
                         <label>Password</label>
                         <Input
-                          name="password"
+                          name='password'
                           onChange={onChange}
                           value={password}
-                          type="password"
+                          type='password'
                         />
                       </div>
                     </div>
                   )
                 }
               </div>
-              <button onClick={onSubmit} className="btn btn-info" style={{ 'marginTop': '20px' }}>
+              <button onClick={onSubmit} className='btn btn-info' style={{ 'marginTop': '20px' }}>
                 {url === '/signup' ? ('Create account') : ('Log in')}
               </button>
               <div style={{ 'marginTop': '20px' }}></div>
               {
                 url === '/signup' ? (
-                  <p className="margin-t-15">
+                  <p className='margin-t-15'>
                     Have an Account? <a href='#/login'>Log in Now &raquo;</a>
                   </p>
                 ) : (
-                  <p className="margin-t-15">
+                  <p className='margin-t-15'>
                     Don't Have an Account for Your Organization? <a href='#/signup'>Create a New Organization &raquo;</a>
                   </p>
                 )

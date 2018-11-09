@@ -28,12 +28,12 @@ class AddForm extends Component {
     const { onChange, onSave } = this;
     const { name } = this.state;
     return (
-      <div className="row">
-        <div className="form-group col-md-6">
-          <input name='name' value={name} onChange={onChange} className="form-control"></input>
+      <div className='row'>
+        <div className='form-group col-md-6'>
+          <input name='name' value={name} onChange={onChange} className='form-control'></input>
         </div>
-        <div className="col-md-4">
-          <button className="field" onClick={onSave} className="btn btn-info">Add Category</button>
+        <div className='col-md-4'>
+          <button className='field' onClick={onSave} className='btn btn-info'>Add Category</button>
         </div>
       </div>
     );

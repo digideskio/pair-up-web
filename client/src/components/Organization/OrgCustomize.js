@@ -15,22 +15,22 @@ const instructions = [
 const OrgCustomize = ({ organization, id, ownForms, deleteForm }) => {
   if (!organization) return null;
   return (
-    <div className="org-background">
-      <div className="container">
-        <div className="row">
+    <div className='org-background'>
+      <div className='container'>
+        <div className='row'>
           <OrgNav id={id} />
-          <div className="col-lg-9" >
-            <div className="card mt-4 card-body">
+          <div className='col-lg-9' >
+            <div className='card mt-4 card-body'>
               <h2>Member Skill Categories</h2>
               { instructions.map((line, i) => <p key={i} style={{ fontSize: '11pt'}}>{line}</p>) }
-              <ul className="list-group list-group-flush">
+              <ul className='list-group list-group-flush'>
                 {
                   ownForms.map(form => (
-                    <li className="list-group-item" key={form.id}>
+                    <li className='list-group-item' key={form.id}>
                       {form.name}
                       &nbsp;
                       <button
-                        className="btn2 btn-warning btn-sm"
+                        className='btn2 btn-warning btn-sm'
                         style={{ float: 'right' }}
                         onClick={() => deleteForm(form.id)}
                       >

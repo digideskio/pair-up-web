@@ -14,29 +14,29 @@ const OrgUsers = ({ organization, id, ownUsers, removeUser, userOrganizations })
   if (!organization) return null
   var orgId = id;
   return (
-    <div className="org-background">
-      <div className="container">
-        <div className="row">
+    <div className='org-background'>
+      <div className='container'>
+        <div className='row'>
           <OrgNav id={orgId} />
-          <div className="col-lg-9" >
-            <div className="card mt-4 card-body">
+          <div className='col-lg-9' >
+            <div className='card mt-4 card-body'>
               <h2>{organization.name}: Members</h2>
               { instructions.map((line, i) => <p key={i} style={{ fontSize: '11pt'}}>{line}</p>) }
-              <ul className="list-group list-group-flush">
+              <ul className='list-group list-group-flush'>
                 {
                   ownUsers.length === 0 ? (
                     <h4>There are currently no members</h4>
                   ) : (
                     ownUsers.map(user => (
-                      <li className="list-group-item" key={user.id}>
+                      <li className='list-group-item' key={user.id}>
                         {user.fullName}
                         <Link to={`/users/${user.id}`}>
-                          <button className="btn2 btn-info btn-sm" style={{ float: 'right' }}>
+                          <button className='btn2 btn-info btn-sm' style={{ float: 'right' }}>
                             Edit
                           </button>
                         </Link>
                         <span style={{ float: 'right' }}>&nbsp;</span>
-                        <button className="btn2 btn-warning btn-sm" style={{ float: 'right' }} onClick={() => removeUser(user.id, organization.id, userOrganizations)}>
+                        <button className='btn2 btn-warning btn-sm' style={{ float: 'right' }} onClick={() => removeUser(user.id, organization.id, userOrganizations)}>
                           Remove
                         </button>
                       </li>

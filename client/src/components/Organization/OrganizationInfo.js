@@ -9,14 +9,14 @@ const OrganizationInfo = ({ organization, deleteOrganization }) => {
   if (!organization) return null
   const { id } = organization;
   return (
-    <div className="org-background">
-      <div className="container">
-        <div className="row">
+    <div className='org-background'>
+      <div className='container'>
+        <div className='row'>
 
           <OrgNav id={id} />
 
-          <div className="col-lg-9" >
-            <div className="card mt-4 card-body">
+          <div className='col-lg-9' >
+            <div className='card mt-4 card-body'>
               <h2 style={{ textAlign: 'center' }}>{organization.name}</h2>
               {
                 organization.image && 
@@ -24,7 +24,7 @@ const OrganizationInfo = ({ organization, deleteOrganization }) => {
               }
               <OrganizationForm organization={organization} />
               <br />
-              <button className="btn btn-danger" onClick={() => deleteOrganization(id)}>Delete Organization</button>
+              <button className='btn btn-danger' onClick={() => deleteOrganization(id)}>Delete Organization</button>
             </div>
           </div>
 

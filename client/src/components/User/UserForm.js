@@ -27,8 +27,8 @@ class UserForm extends Component {
     componentWillReceiveProps(nextProps) {
       const { user } = nextProps;
       if (user.id) {
-        const { id, firstName, lastName, email, password } = user
-        this.setState({ id, firstName, lastName, email, password })
+        const { id, firstName, lastName, email, password } = user;
+        this.setState({ id, firstName, lastName, email, password });
       }
     }
 
@@ -40,8 +40,8 @@ class UserForm extends Component {
     onSave(ev) {
       ev.preventDefault();
       const { updateUser, user } = this.props;
-      const { id, firstName, lastName, email, password } = this.state
-      updateUser({ id, firstName, lastName, email, password }, user.orgId);
+      const { id, firstName, lastName, email, password } = this.state;
+      updateUser({ id, firstName, lastName, email, password }, user.orgId); // what is this second argument doing?
     }
 
     render() {
@@ -61,9 +61,10 @@ class UserForm extends Component {
                 <input
                   className='form-control'
                   name={field}
+                  placeholder={fields[field]}
                   onChange={onChange}
                   value={this.state[field]}
-                  type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text' }
+                  type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text'}
                 />
               </div>
             ))

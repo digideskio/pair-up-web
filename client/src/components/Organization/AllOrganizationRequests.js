@@ -4,11 +4,11 @@ import { deleteOrganizationRequestFromServer, updateUserOnServer } from '../../s
 
 const AllOrganizationRequests = ({ users, organizations, organizationRequests, deleteOrganizationRequest }) => {
   return (
-    <div className="org-background">
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12" >
-            <div className="card mt-4 card-body">
+    <div className='org-background'>
+      <div className='container'>
+        <div className='row'>
+          <div className='col-lg-12' >
+            <div className='card mt-4 card-body'>
               <h2>All Organization Requests</h2>
               {
                 organizationRequests.map(request => {

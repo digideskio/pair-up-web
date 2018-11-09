@@ -12,21 +12,26 @@ const CheckAuth = (Component) => {
     }
 
     checkAuth() {
-      if (!this.props.isAuthenticated) location.hash = '/login'
+      const { isAuthenticated } = this.props;
+      if(!isAuthenticated) {
+        location.hash = '/login';
+      }
     }
 
     render() {
-      const { isAuthenticated } = this.props
+      const { isAuthenticated } = this.props;
       return (
-        <div>{ isAuthenticated ? <Component { ...this.props } /> : null }</div>
+        <div>
+          { isAuthenticated ? <Component { ...this.props } /> : null }
+        </div>
       );
     }
   }
 
   const mapState = ({user}) => {
-    const token = window.localStorage.getItem('token')
-    const isAuthenticated = token && user.userStatus !== 'user' ? true : false
-    // console.log(isAuthenticated)
+    const token = window.localStorage.getItem('token');
+    // const isAuthenticated = token && user.userStatus !== 'user' ? true : false;
+    const isAuthenticated = token && user.userStatus !== 'user';
     return { isAuthenticated }
   }
 

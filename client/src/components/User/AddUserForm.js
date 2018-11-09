@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createUserOrganizationOnServer } from '../../store';
 
@@ -25,7 +25,7 @@ class AddUserForm extends Component {
     ev.preventDefault();
     const { users } = this.props;
     const { email } = this.state;
-    const findUser = users.find(user => user.email === email)
+    const findUser = users.find(user => user.email === email);
     if (findUser) {
       this.setState({ findUser });
     } else {
@@ -46,11 +46,11 @@ class AddUserForm extends Component {
     const { onChange, onSave, onSearch } = this;
     const { email, findUser, errorMessage } = this.state;
     return (
-      <div className="row" style={{ marginTop: '20px' }}>
-        <div className="form-group col-md-6">
-          <input placeholder='Enter Email' name='email' value={email} onChange={onChange} className="form-control"></input>
+      <div className='row' style={{ marginTop: '20px' }}>
+        <div className='form-group col-md-6'>
+          <input placeholder='Enter Email' name='email' value={email} onChange={onChange} className='form-control'></input>
         </div>
-        <div className="col-md-4">
+        <div className='col-md-4'>
           <button onClick={onSearch} className='btn btn-info'>Search by email</button>
         </div>
         {

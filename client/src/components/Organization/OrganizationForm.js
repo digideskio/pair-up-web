@@ -21,6 +21,7 @@ class OrganizationForm extends Component {
     }
     this.onSave = this.onSave.bind(this);
     this.addPhoto = this.addPhoto.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.generateFormRow = this.generateFormRow.bind(this);
   }
 
@@ -55,9 +56,9 @@ class OrganizationForm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-    const { organization: { id }, user } = this.props;
+    const { organization, user } = this.props;
     const { updateOrganization, createOrganization } = this.props;
-    if(id) updateOrganization(this.state);
+    if(organization) updateOrganization(this.state);
     else createOrganization(this.state, user.id);
   }
 
@@ -69,12 +70,12 @@ class OrganizationForm extends Component {
     }
     const { handleChange } = this;
     return (
-      <div className="form-row">
+      <div className='form-row'>
         {
           columns.map((col, i) => (
-            <div key={i} className="form-group col-md-6">
+            <div key={i} className='form-group col-md-6'>
               <label>{fields[col]}</label>
-              <input className="form-control" name={col} value={this.state[col]} onChange={handleChange} />
+              <input className='form-control' name={col} value={this.state[col]} onChange={handleChange} />
             </div>
           ))
         }
@@ -99,8 +100,8 @@ class OrganizationForm extends Component {
             { generateFormRow([ 'name', 'organization_type' ]) }
             {
               id &&
-                <div className="form-row">
-                  <div className="form-group col-md">
+                <div className='form-row'>
+                  <div className='form-group col-md'>
                     <label>Search Your Address using Google AutoFill</label>
                     <AutoComplete organization={organization} />
                   </div>
@@ -110,7 +111,7 @@ class OrganizationForm extends Component {
             { generateFormRow([ 'state', 'zip' ]) }
             { generateFormRow([ 'contact_name', 'contact_phone' ]) }
             <div>Add Image<input type='file' onChange={addPhoto} /></div>
-            <div><button className="btn btn-info" style={{ 'marginTop': '20px' }} onClick={onSave}>Submit</button></div>
+            <div><button className='btn btn-info' style={{ 'marginTop': '20px' }} onClick={onSave}>Submit</button></div>
           </div>
         </div>
       </div>

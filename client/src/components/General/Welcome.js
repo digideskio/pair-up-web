@@ -14,7 +14,7 @@ const Welcome = ({ user }) => {
           ) : (
             <div>
               <h3>Welcome {user.firstName} to Pair Up!</h3>
-                <button className="large ui primary basic button"><Link to={`/organizations/create`}>Click to Create Your Organization!</Link></button>
+                <button className='large ui primary basic button'><Link to={`/organizations/create`}>Click to Create Your Organization!</Link></button>
               </div>
           )
         ) : null

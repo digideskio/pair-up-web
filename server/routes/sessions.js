@@ -38,7 +38,7 @@ router.post('/:userId/organizations/:organizationId', (req, res, next) => {
         organizationId: req.params.organizationId
       }))
     .then(user => res.send(user))
-    .catch(next)
+    .catch(next);
 })
 
 module.exports = router;

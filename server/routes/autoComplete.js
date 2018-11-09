@@ -15,7 +15,7 @@ router.post('/getpredictions', (req, res, next) => {
 router.post('/getplace', (req, res, next) => {
   gMC.reverseGeocode({ place_id: req.body.query }).asPromise()
     .then(resp => res.send(resp.json.results))
-    .catch(next)
+    .catch(next);
 });
 
 
