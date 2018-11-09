@@ -14,7 +14,7 @@ router.post('/signup', (req, res, next) => {
     .then(user => {
       if(req.body.token) {
         stripe.charges.create({
-          amount: 9999,
+          amount: 999,
           currency: 'usd',
           description: 'Pair Up Subscription Charge',
           source: req.body.token.id

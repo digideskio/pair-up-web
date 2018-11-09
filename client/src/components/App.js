@@ -20,10 +20,7 @@ import OrganizationRequests from './Organization/OrganizationRequests';
 import OrgCustomize from './Organization/OrgCustomize';
 import LoginForm from './User/LoginForm';
 import OrganizationForm from './Organization/OrganizationForm';
-import Welcome from './General/Welcome';
 import Home from './Home';
-
-import OrgNav from './Organization/OrgNav';
 
 class App extends React.Component {
   componentDidMount() {
@@ -56,22 +53,16 @@ class App extends React.Component {
             <div>
               <MasterNav />
               <Switch>
+                
                 <Route exact path='/' component={Home} />
                 {/* USER ROUTES */}
                 <Route exact path='/users' component={UsersMaster} />
                 <Route exact path='/users/:id' component={({ match }) => <UserInfoAuth id={match.params.id} />} />
                 
-                
                 {/* ORGANIZATION ROUTES */}
-                
                 <Route exact path='/organizations' component={OrganizationsMaster} />
                 <Route exact path='/organizations/create' component={OrgFormAuth} />
-                
-                {/* <Route path='/organizations/:id' component={OrgNav} /> */}
                 <Route exact path='/organizations/:id' component={({ match, history }) => <OrganizationInfoAuth id={match.params.id} history={history} />} />
-
-          
-
                 <Route exact path='/organizations/:id/users' component={({ match, history }) => <OrgUsersAuth id={match.params.id} history={history} />} />
                 <Route exact path='/organizations/:id/requests' component={({ match, history }) => <OrgRequestsAuth id={match.params.id} history={history} />} />
                 <Route exact path='/organizations/:id/customize' component={({ match, history }) => <OrgCustomizeAuth id={match.params.id} history={history} />} />
@@ -81,12 +72,15 @@ class App extends React.Component {
                 <Route exact path='/master' component={OrganizationsMaster} />
                 <Route exact path='/master/organizationRequests' component={AllOrganizationRequests} />
                 <Route exact path='/master/userRequests' component={UserRequests} />
+
                 {/* AUTH ROUTES */}
                 <Route exact path='/login' component={LoginForm} />
                 <Route exact path='/signup' component={LoginForm} />
+
                 {/* 404 & No Permission PAGE */}
                 <Route path='/nopermission' component={NotMaster} />
                 <Route path='/:id' component={FourOhFour} />
+
               </Switch>
             </div>
           </div>

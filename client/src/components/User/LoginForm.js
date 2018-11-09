@@ -10,7 +10,7 @@ const LoginForm = ({ history }) => {
         <div className='row'>
           <div className='col-lg-12' >
             <div className='card mt-4 card-body'>
-              <StripeProvider apiKey='pk_test_AhLiCUGnPSZ5IySTH3Givqd0'>
+              <StripeProvider apiKey='pk_test_L5BNU52HtQupz1A0XX4pzElV'>
                 <Elements>
                   <InjectedLoginForm history={history} url={location.hash.slice(1)} />
                 </Elements>

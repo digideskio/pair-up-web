@@ -19,9 +19,11 @@ class UserForm extends Component {
     }
 
     componentDidMount() {
-      console.log(this.props.id)
-      const { user: { id, firstName, lastName, email, password } } = this.props;
-      this.setState({ id, firstName, lastName, email, password });
+      const { user } = this.props;
+      if(user) {
+        const { id, firstName, lastName, email, password } = user;
+        this.setState({ id, firstName, lastName, email, password });
+      }
     }
 
     componentWillReceiveProps(nextProps) {
