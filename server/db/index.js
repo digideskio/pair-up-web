@@ -6,7 +6,10 @@ const UserRequest = require('./models/UserRequest')
 const Message = require('./models/Message');
 const Conversation = require('./models/Conversation');
 const User = require('./models/User');
-const Form = require('./models/Form')
+const Form = require('./models/Form');
+
+const Block = require('./models/Block');
+
 const conn = require('./conn');
 
 Description.belongsTo(User);
@@ -24,6 +27,9 @@ UserOrganization.belongsTo(Organization);
 OrganizationRequest.belongsTo(Organization);
 OrganizationRequest.belongsTo(User);
 User.belongsTo(Organization);
+
+Block.belongsTo(User, { as: 'blocker' });
+Block.belongsTo(User, { as: 'blockee' });
 
 UserRequest.belongsTo(User, { as: 'requester' });
 UserRequest.belongsTo(User, { as: 'responder' });
@@ -43,6 +49,7 @@ module.exports = {
     OrganizationRequest,
     UserRequest,
     Conversation,
-    Message
+    Message,
+    Block
   }
 };

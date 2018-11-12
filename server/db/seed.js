@@ -1,5 +1,5 @@
 const conn = require('./conn');
-const { User, Organization, Description, UserOrganization, Form, OrganizationRequest, UserRequest } = require('./index').models;
+const { User, Organization, Description, UserOrganization, Form, OrganizationRequest, UserRequest, Block } = require('./index').models;
 
 const seed = () => {
   return Promise.all([
@@ -34,8 +34,8 @@ const seed = () => {
     User.create({
       firstName: 'Gabriel',
       lastName: 'Rumbaut',
-      email: 'gabrielrumbaut@gmail.com',
-      password: 'gabriel',
+      email: 'gabe@gmail.com',
+      password: 'gabe',
       userStatus: 'user'
     }),
     User.create({
@@ -48,7 +48,7 @@ const seed = () => {
     Organization.create({
       name: 'Cliffs LIC',
       organization_type: 'Climbing Gym',
-      address: '11 44th Drive',
+      address: '11-11 44th Drive',
       city: 'Queens',
       state: 'New York',
       zip: '11101',
@@ -120,7 +120,7 @@ const seed = () => {
       avatar: 'https://vignette.wikia.nocookie.net/villains/images/5/56/Comp_2.jpg/revision/latest?cb=20140318215950',
     })
   ])
-  .then(([ master, admin, jeremy, anna, gabriel, alexander, cliffs, reacto, fullstack, tiger, acme]) => {
+  .then(([ master, admin, jeremy, anna, gabriel, alexander, cliffs, reacto, fullstack, tiger, acme ]) => {
     return Promise.all([
       Form.create({
         name: 'Bouldering Skill Level',
@@ -130,23 +130,34 @@ const seed = () => {
         name: 'Top-Rope Skill Level',
         organizationId: cliffs.id
       }),
-      Form.create({
-        name: 'Years Experience',
-        organizationId: fullstack.id
-      }),
-      Form.create({
-        name: 'Developer Level',
-        organizationId: fullstack.id
-      }),
+      master, admin, jeremy, anna, gabriel, alexander, cliffs, reacto, fullstack, tiger, acme
+    ]);
+  })
+  .then(([ cliffsForm1, cliffsForm2, master, admin, jeremy, anna, gabriel, alexander, cliffs, reacto, fullstack, tiger, acme ]) => {
+    return Promise.all([
       Description.create({
-        description: 'I am a junior',
-        userId: anna.id,
-        organizationId: fullstack.id,
-      }),
+        formId: cliffsForm1.id,
+        organizationId: cliffs.id,
+        description: 'V6',
+        userId: jeremy.id
+      }),      
       Description.create({
-        description: 'I am a senior',
-        userId: alexander.id,
-        organizationId: fullstack.id,
+        formId: cliffsForm2.id,
+        organizationId: cliffs.id,
+        description: '5.11',
+        userId: jeremy.id
+      }),      
+      Description.create({
+        formId: cliffsForm1.id,
+        organizationId: cliffs.id,
+        description: 'V2',
+        userId: gabriel.id
+      }),      
+      Description.create({
+        formId: cliffsForm2.id,
+        organizationId: cliffs.id,
+        description: '5.8',
+        userId: gabriel.id
       }),
       UserOrganization.create({
         userId: admin.id,
@@ -171,6 +182,24 @@ const seed = () => {
         status: 'accepted'
       }),
       UserOrganization.create({
+        userId: jeremy.id,
+        organizationId: cliffs.id
+      }),
+      OrganizationRequest.create({
+        userId: jeremy.id,
+        organizationId: cliffs.id,
+        status: 'accepted'
+      }),
+      UserOrganization.create({
+        userId: gabriel.id,
+        organizationId: cliffs.id
+      }),
+      OrganizationRequest.create({
+        userId: gabriel.id,
+        organizationId: cliffs.id,
+        status: 'accepted'
+      }),
+      UserOrganization.create({
         userId: anna.id,
         organizationId: fullstack.id
       }),
@@ -191,6 +220,30 @@ const seed = () => {
         organizationId: acme.id
       }),
       admin.setOrganization(cliffs),
+      User.findOne({
+        where: { email: 'gabe@gmail.com' }
+      })
+      .then(gabe => {
+        Object.assign(gabe, { checkedInId: cliffs.id });
+        return gabe.save();
+      }),
+      User.findOne({
+          where: { email: 'jgrubard@gmail.com' }
+        })
+        .then(jer => {
+          Object.assign(jer, { checkedInId: cliffs.id });
+          return jer.save();
+      }),
+      UserRequest.create({
+        status: 'accepted',
+        organizationId: cliffs.id,
+        requesterId: gabriel.id,
+        responderId: jeremy.id
+      }),
+      Block.create({
+        blockerId: gabriel.id,
+        blockeeId: jeremy.id
+      })
     ])
   })
 }

@@ -6,7 +6,20 @@ const { mobileSockets } = require('../sockets');
 
 router.get('/', (req, res, next) => {
   User.findAll()
-    .then(users => res.send(users))
+    .then(users => {
+      res.send(users)
+    })
+    .catch(next);
+});
+
+router.get('/:id', (req, res, next) => {
+  const { id } = req.params;
+  User.findAllNotBlocked(id)
+    .then(users => {
+      users.forEach(user => console.log('user:', user.fullName));
+      console.log('ROUTE USERS LENGTH', users.length);
+      res.send(users);
+    })
     .catch(next);
 });
 
